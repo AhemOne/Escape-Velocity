@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Testing: ShipObject.js</title>
+
+  <script>var app = {};</script>
+  <script src="/app/include/ImportJson/ImportJson.js"></script>
+  <script src="/app/include/CreateCustomHTMLElement/CreateCustomHTMLElement.js"></script>
+  <script src="/app/element/application-resource.js"></script>
+  <!-- data types -->
+  <script src="/app/element/GovernmentObject/GovernmentObject.js"></script>
+  <script src="/app/element/ShipObject/ShipObject.js"></script>
+  <script src="/app/element/SpaceObject/SpaceObject.js"></script>
+  <script src="/app/element/StateObject/StateObject.js"></script>
+  <script src="/app/element/WeaponObject/WeaponObject.js"></script>
+  <script src="/app/element/SystemObject/SystemObject.js"></script>
+  <!-- graphic types -->
+  <script src="/app/element/SelectIcon/SelectIcon.js"></script>
+  <script src="/app/element/SpinObject/SpinObject.js"></script>
+  <script src="/app/element/graphics/spin.js"></script>
+  <script src="/app/element/graphics/select.js"></script>
+  <script src="/app/element/PushButton/PushButton.js"></script>
+  <!-- special types -->
+  <script src="/app/element/AudioObject/AudioObject.js"></script>
+  <script src="/app/element/GameController/GameController.js"></script>
+  <!-- dialogs -->
+  <script src="/app/element/GameDialog/BarDialog.js"></script>
+  <script src="/app/element/GameDialog/CommoditiesDialog.js"></script>
+  <script src="/app/element/GameDialog/LandingDialog.js"></script>
+
+  <link rel="stylesheet" href="/app/font/font.css">
+  <script>
+  </script>
+</head>
+<body style="color: lightgreen; background: black; overflow: hidden;">
+  <!-- get JSON data -->
+  <import-json src="/app/fork/EscapeVelocity.json" container="app.application"></import-json>
+  <import-json src="/app/fork/EVData.json" container="app.data"></import-json>
+  <import-json src="/app/fork/EVGraphics.json" container="app.graphics"></import-json>
+  <import-json src="/app/fork/EVMusic.json" container="app.music"></import-json>
+  <import-json src="/app/fork/EVSounds.json" container="app.sounds"></import-json>
+  <import-json src="/app/fork/EVTitles.json" container="app.titles"></import-json>
+
+  <button onclick="StateObject.stop();">stop</button>
+
+  <label>spob ID</label>
+  <select id="system-selector" onchange="(event => {
+    console.log(event.target.value);
+    document.getElementById('system').systId = event.target.value;
+  })(event)">
+  </select>
+
+  <label>ship ID</label>
+  <select id="ship-selector" onchange="(event => {
+    console.log(event.target.value);
+    document.getElementById('player').shipId = event.target.value;
+  })(event)">
+  </select>
+
+  <style>
+    ship-object {
+      position: absolute;
+    }
+  </style>
+
+  <keyboard-controller id="keyboard-controller" forward="w" left="a" right="d" land="l"></keyboard-controller>
+  <div id="governments"></div>
+  <div id="container" style="position: absolute;"></div>
+
+  <script>
+    for ( let index in SpaceObject.spob ) {
+      if ( index === 'template' ) continue;
+      
+      const option = document.createElement('option');
+      option.value = index;
+      option.innerHTML = index;
+      document.getElementById('system-selector').append(option);
+    }
+
+    for ( let index in ShipObject.ship ) {
+      if ( index === 'template' ) continue;
+      
+      const option = document.createElement('option');
+      option.value = index;
+      option.innerHTML = index;
+      document.getElementById('ship-selector').append(option);
+    }
+
+    const governmentContainer = document.getElementById('governments');
+    for ( let index of Object.keys(app.data.govt) ) {
+      if ( index === 'template' ) continue;
+      const government = new GovernmentObject();
+      government.govtId = index;
+      governmentContainer.append(government);
+    }
+
+    const system = new SystemObject();
+    system.id = 'system';
+    system.systId = 129;
+
+    const ship = new ShipObject();
+    ship.id = 'player';
+    ship.shipId = 128;
+    ship.state.controller.type = 'player';
+
+    const container = document.getElementById('container');
+    container.append(system, ship);
+
+    StateObject.fps = 30;
+
+  </script>
+</body>
+</html>
