@@ -5,6 +5,8 @@ _Please note: All graphics, audio and story elements are not licenenced and are 
 
 ## Introduction
 
+Escape Velocity was a shareware game released in 1996. It was created and developed by Matt Burch and distributed by Ambrosia Software. It was a space based exploration game which allowed the user to take a number of different pathways, depending on their playstyle. The game focused on two opposing government factions with some ancillary govenments with optional story line elements based around them. Progressing story elements would unlock exclusive game elements to the player, such as new ships and weapons. The player could also taken on a trader role, performing endless courier deliveries and trading commodities between star systems. The player controls a space ship in a 2D space where they may fly between planets of a system, engage other NPC ships or enter hyperspace - the method used to move between different systems.
+
 ## Research
 
 ### MacOS and Resource Forks
@@ -39,5 +41,6 @@ Audio resources in Escape Velocity is stored as a 8 bit signed monophonic PCM st
 
 __Loading Images__
 
-Images are stored as a PICT resource containing 256 colour images in a bitmap type format, and while there may be some method to read these resources much of this has been lost (at least from a compound resource fork perspective), instead images have been extracted using a classic MacOS emulator (in this case the [Infinite Mac implementation of Mac OS 8](https://macos8.app)) was used to open the _EV Graphics_ and _EV Titles_ resource forks in ResEdit, copy the required resources across to Adobe Photoshop, then saved to GIF format before being extracted. GIF format was chosen as it is a web based format which was available in the Photoshop version available on the Infinite Mac implementation while also preserving the bitmap of the original image, meaning there was a minimal data loss in the conversion. This, in turn, means PICT resources must be replaced by links to images which are loaded separately, or some other method, until a way to natively parse to a web format can be discovered/implemented. This means in the future if plug ins are supported, they too must be stripped of images for them to work properly.
+Images are stored as a PICT resource whic seems to contain 256 colour images in a bitmap type format, and while there may be some method to read these resources much of this has been lost (at least from a compound resource fork perspective), instead images have been extracted using a classic MacOS emulator (in this case the [Infinite Mac implementation of Mac OS 8](https://macos8.app)) was used to open the _EV Graphics_ and _EV Titles_ resource forks in ResEdit, copy the required resources across to Adobe Photoshop, then saved to GIF format before being extracted. GIF format was chosen as it is a web based format which was available in the Photoshop version available on the Infinite Mac implementation while also preserving the bitmap of the original image, meaning there was a minimal data loss in the conversion. This, in turn, means PICT resources must be replaced by links to images which are loaded separately, or some other method, until a way to natively parse to a web format can be discovered/implemented. This means in the future if plug ins are supported, they too must be stripped of images for them to work properly.
+
 
